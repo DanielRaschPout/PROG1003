@@ -1,11 +1,9 @@
 /**
  * @file Oblig1.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
- * @brief 
  * @version 0.1
- * @date 31-01-2023
+ * @date 1-02-2023
  * 
- * @copyright Copyright (c) 2023
  * 
  */
 
@@ -61,7 +59,7 @@ int main() {
 } // main end
 
 /**
- * @brief Fjerner alle gjøremålene.
+ * @brief Printer ut menyen.
  * 
  */
 void skrivMeny() {
@@ -89,14 +87,17 @@ void nyttGjoremaal() {
 void gjoremaalLesData(Gjoremaal & gjoremaal) {
     cout << "Beskrivelse: ";
     getline(cin, gjoremaal.beskrivelse);
-    cout << "Ukedag: ";
-    getline(cin, gjoremaal.ukedag);
+
+    int dagNr = lesInt("Ukedag", 1, 7);
+    gjoremaal.ukedag = UKEDAG[dagNr - 1];
+    cin.ignore(1000, '\n');
     gjoremaal.tid = lesFloat("Tid", 0.5, 12.0);
 } // gjoremaalLesData end
 
 /**
  * @brief Skriver all data til ett gjøremål.
  * 
+ * @param gjoremaal Gjøremalet som skal skrives ut.
  */
 void gjoremaalSkrivData(const Gjoremaal* gjoremaal) {
     cout << "Beskrivelse: " << gjoremaal->beskrivelse << '\n';
@@ -107,15 +108,27 @@ void gjoremaalSkrivData(const Gjoremaal* gjoremaal) {
 /**
  * @brief Skriver ut alle gjøremålene.
  * 
+ * @param dag Hvilken dag som skal skrives ut. Hvis "Alle" skrives alle ut.
  */
-void skrivAlleGjoremaal(const string dag = "Alle") {
+void skrivAlleGjoremaal(const string dag) {
+    
+    // Hvis det ikke er noen gjøremål å skrive ut.
     if (gGjoremaalene.size() == 0) {
-        cout << "Ingen gj�rem�l � skrive ut" << '\n';
+        cout << "Ingen gjøremål å skrive ut" << '\n';
     } // if end
     
+    // Hvis dag er "Alle".
+    else if (dag == "Alle") {
+        for (int i = 0; i < gGjoremaalene.size(); i++) {
+            gjoremaalSkrivData(gGjoremaalene[i]);
+            cout << '\n';
+        } // for end
+    } // else if end
+
+    // Hvis dag er en ukedag.
     else {
         for (int i = 0; i < gGjoremaalene.size(); i++) {
-            if (dag == "Alle" || gGjoremaalene[i]->ukedag == dag) {
+            if (gGjoremaalene[i]->ukedag == dag) {
                 gjoremaalSkrivData(gGjoremaalene[i]);
                 cout << '\n';
             } // if end
@@ -123,18 +136,22 @@ void skrivAlleGjoremaal(const string dag = "Alle") {
     } // else end
 } // skrivAlleGjoremaal end
 
+/**
+ * @brief Skriver ut alle gjøremålene for en gitt dag.
+ * 
+ */
 void skrivEnDagsGjoremaal() {
     int dagNr = lesInt("Dag", 1, 7);
-    skrivAlleGjoremaal(dag);
+    skrivAlleGjoremaal(UKEDAG[dagNr - 1]);
 } // skrivEnDagsGjoremaal end
 
 void fjernEttGjoremaal() {
     if (gGjoremaalene.size() == 0) {
-        cout << "Ingen gj�rem�l � fjerne" << '\n';
+        cout << "Ingen gjøremål å fjerne" << '\n';
         return;
     } // if end
     else {
-        int index = lesInt("Gj�rem�lsnummer", 1, gGjoremaalene.size());
+        int index = lesInt("Gjøremålsnummer", 1, gGjoremaalene.size());
         delete gGjoremaalene[index - 1];
         gGjoremaalene.erase(gGjoremaalene.begin() + index - 1);
     } // else end
