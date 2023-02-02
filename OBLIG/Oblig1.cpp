@@ -128,6 +128,8 @@ void skrivAlleGjoremaal(const string dag) {
     // Hvis dag er "Alle".
     else if (dag == "Alle") {
         for (int i = 0; i < gGjoremaalene.size(); i++) {
+
+            cout << "Gjøremål nr." << i + 1 << '\n';
             gjoremaalSkrivData(gGjoremaalene[i]);
             cout << '\n';
         } // for end
@@ -137,6 +139,7 @@ void skrivAlleGjoremaal(const string dag) {
     else {
         for (int i = 0; i < gGjoremaalene.size(); i++) {
             if (gGjoremaalene[i]->ukedag == dag) {
+                cout << "Gjøremål nr." << i + 1 << '\n';
                 gjoremaalSkrivData(gGjoremaalene[i]);
                 cout << '\n';
             } // if end
