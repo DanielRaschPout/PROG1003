@@ -1,9 +1,16 @@
 /**
+ * 
+ *    Programmet:
+ *      - har oversikt over og skriver ut gjøremål
+ *     - lar en bruker legge inn nye og fjerne gjøremål
+ * 
  * @file Oblig1.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
- * @version 0.1
- * @date 1-02-2023
+ * @brief 
+ * @version 1.0
+ * @date 02-02-2023
  * 
+ * @copyright Copyright (c) 2023
  * 
  */
 
@@ -59,19 +66,19 @@ int main() {
 } // main end
 
 /**
- * @brief Printer ut menyen.
+ * Printer ut menyen.
  * 
  */
 void skrivMeny() {
-    cout << "N: Nytt gj�rem�l" << '\n';
-    cout << "A: Skriv alle gj�rem�l" << '\n';
-    cout << "D: Skriv en dags gj�rem�l" << '\n';
-    cout << "F: Fjern et gj�rem�l" << '\n';
+    cout << "N: Nytt gjøremål" << '\n';
+    cout << "A: Skriv alle gjøremål" << '\n';
+    cout << "D: Skriv en dags gjøremål" << '\n';
+    cout << "F: Fjern et gjøremål" << '\n';
     cout << "Q: Avslutt" << '\n';
 } // skrivMeny end
 
 /**
- * @brief Legger til et nytt gjøremål.
+ * Legger til et nytt gjøremål.
  * 
  */
 void nyttGjoremaal() {
@@ -81,8 +88,9 @@ void nyttGjoremaal() {
 } // nyttGjoremaal end
 
 /**
- * @brief Leser inn data for et nytt gjøremål.
+ * Leser inn data for et nytt gjøremål.
  * 
+ * @param gjoremaal Gjøremalet som skal leses inn.
  */
 void gjoremaalLesData(Gjoremaal & gjoremaal) {
     cout << "Beskrivelse: ";
@@ -90,12 +98,11 @@ void gjoremaalLesData(Gjoremaal & gjoremaal) {
 
     int dagNr = lesInt("Ukedag", 1, 7);
     gjoremaal.ukedag = UKEDAG[dagNr - 1];
-    cin.ignore(1000, '\n');
     gjoremaal.tid = lesFloat("Tid", 0.5, 12.0);
 } // gjoremaalLesData end
 
 /**
- * @brief Skriver all data til ett gjøremål.
+ * Skriver all data til ett gjøremål.
  * 
  * @param gjoremaal Gjøremalet som skal skrives ut.
  */
@@ -106,7 +113,7 @@ void gjoremaalSkrivData(const Gjoremaal* gjoremaal) {
 } // gjoremaalSkrivData end
 
 /**
- * @brief Skriver ut alle gjøremålene.
+ * Skriver ut alle gjøremålene.
  * 
  * @param dag Hvilken dag som skal skrives ut. Hvis "Alle" skrives alle ut.
  */
@@ -137,7 +144,7 @@ void skrivAlleGjoremaal(const string dag) {
 } // skrivAlleGjoremaal end
 
 /**
- * @brief Skriver ut alle gjøremålene for en gitt dag.
+ * Skriver ut alle gjøremålene for en gitt dag.
  * 
  */
 void skrivEnDagsGjoremaal() {
@@ -145,6 +152,10 @@ void skrivEnDagsGjoremaal() {
     skrivAlleGjoremaal(UKEDAG[dagNr - 1]);
 } // skrivEnDagsGjoremaal end
 
+/**
+ * Fjerner et gjøremål.
+ * 
+ */
 void fjernEttGjoremaal() {
     if (gGjoremaalene.size() == 0) {
         cout << "Ingen gjøremål å fjerne" << '\n';
@@ -157,6 +168,10 @@ void fjernEttGjoremaal() {
     } // else end
 } // fjernEttGjoremaal end
 
+/**
+ * Fjerner alle gjøremål.
+ * 
+ */
 void fjernAlleGjoremaal() {
     for (int i = 0; i < gGjoremaalene.size(); i++) {
         delete gGjoremaalene[i];
