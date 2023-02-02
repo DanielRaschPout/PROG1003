@@ -17,7 +17,7 @@
 #include <iostream>                //  cout, cin
 #include <string>                  //  string-klassen
 #include <vector>                  //  vector
-#include "LesData2.h"              //  Verkt�ykasse for lesing av diverse data
+#include "LesData2.h"              //  Verktøykasse for lesing av diverse data
 using namespace std;
 
 const vector <string> UKEDAG { "Man", "Tirs", "Ons", "Tors",
