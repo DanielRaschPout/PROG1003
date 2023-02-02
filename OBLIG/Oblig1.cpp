@@ -85,6 +85,7 @@ void nyttGjoremaal() {
     Gjoremaal* gjoremaal = new Gjoremaal;
     gjoremaalLesData(*gjoremaal);
     gGjoremaalene.push_back(gjoremaal);
+    cout << "Gjøremål nr." << gGjoremaalene.size() << " lagt til" << '\n';
 } // nyttGjoremaal end
 
 /**
