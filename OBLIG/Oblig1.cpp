@@ -7,7 +7,7 @@
  * @file Oblig1.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
  * @brief 
- * @version 1.0
+ * @version 1.1
  * @date 02-02-2023
  * 
  * @copyright Copyright (c) 2023
@@ -131,7 +131,7 @@ void skrivAlleGjoremaal(const string dag) {
 
             cout << "Gjøremål nr." << i + 1 << '\n';
             gjoremaalSkrivData(gGjoremaalene[i]);
-            cout << '\n';
+            cout << '\n\n';
         } // for end
     } // else if end
 
@@ -141,7 +141,7 @@ void skrivAlleGjoremaal(const string dag) {
             if (gGjoremaalene[i]->ukedag == dag) {
                 cout << "Gjøremål nr." << i + 1 << '\n';
                 gjoremaalSkrivData(gGjoremaalene[i]);
-                cout << '\n';
+                cout << '\n\n';
             } // if end
         } // for end
     } // else end
