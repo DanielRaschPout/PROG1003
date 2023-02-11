@@ -8,7 +8,7 @@
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
  * @brief 
  * @version 1.1
- * @date 02-02-2023
+ * @date 11-02-2023
  * 
  * @copyright Copyright (c) 2023
  * 
@@ -163,7 +163,7 @@ void skrivEnDagsGjoremaal() {
 void fjernEttGjoremaal() {
     if (gGjoremaalene.size() == 0) {
         cout << "Ingen gjøremål å fjerne" << '\n';
-        return;
+        
     } // if end
     else {
         int index = lesInt("Gjøremålsnummer", 1, gGjoremaalene.size());
