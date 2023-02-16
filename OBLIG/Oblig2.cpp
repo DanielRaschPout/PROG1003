@@ -219,8 +219,6 @@ void UtlaansGjenstand::lesData(){
     int sjangerInt =lesInt("Sjanger: ", 1, 4);
     sjanger = Sjanger(sjangerInt-1);
     antallEksemplarer = lesInt("Antall eksemplarer: ", 1, MAKSANTALL);
-
-
 }
 
 /**
@@ -338,6 +336,7 @@ void Bok::lesData() {
   cout << "(1) Heftet, (2) Innbundet, (3) Pocket: ";
   bokFor = lesInt("Bokformat: ", 1, 3);
   bokFormat = Format(bokFor-1);
+  
 
   antallSider = lesInt("Antall sider: ", 1, 1000);
 
@@ -408,8 +407,28 @@ void laanUtGjenstand(){
 
 
 void nyGjenstand() {
+  string title;
+  cout << "Tittel: ";
+  getline(cin, title);
+  if(finnEnGjenstand(title) != nullptr) {
+    cout << "Gjenstanden finnes allerede i biblioteket." << '\n';
+  }
+  else {
+    int valg;
+    cout << "(1) Bok, (2) Film: ";
+    valg = lesInt("Valg: ", 1, 2);
+    if (valg == 1) {
+      Bok* nyBok = new Bok;
+      nyBok->lesData();
+      gBokene.push_back(nyBok);
+    }
+    else {
+      Film* nyFilm = new Film;
+      nyFilm->lesData();
+      gFilmene.push_back(nyFilm);
+    }
+  }
 
-//  LAG INNMATEN
 }
 
 
