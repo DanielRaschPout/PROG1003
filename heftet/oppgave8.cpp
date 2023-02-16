@@ -1,7 +1,7 @@
 /**
  * 
  *  Programmet:
- *     - har leser inn og skriver ut kamper
+ *     - leser inn og skriver ut kamper
  * 
  * @file oppgave8.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
