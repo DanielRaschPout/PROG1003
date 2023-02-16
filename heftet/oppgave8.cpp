@@ -1,3 +1,26 @@
+/**
+ * 
+ *  Programmet:
+ *     - har leser inn og skriver ut kamper
+ * 
+ * @file oppgave8.cpp
+ * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 16-02-2023
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+ * @file oppgave8.cpp
+ * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 16-02-2023
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include <iostream>                //  cout, cin
 #include <string>                  //  string-klassen
 #include <vector>                  //  vector
