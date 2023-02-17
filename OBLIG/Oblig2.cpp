@@ -198,7 +198,63 @@ void UtlaansGjenstand::endreAntallEks() {
 
 void UtlaansGjenstand::laanUt(){
     if (erTilgjengelig()) {
-        // HUSK FINISH ********************************************************
+      string navn;
+      int laanedato,
+          returfrist,
+          dag, mnd, aar,
+          dag1, mnd1, aar1;
+      bool dato1 = false,
+           dato2 = false;
+
+      cout << "Lånerens navn: ";
+      getline(cin, navn);
+
+      while (dato1 == false) {
+      cout << "Lånedato (AAAAMMDD): ";
+      cin >> laanedato;
+      cin.ignore();
+      dag = laanedato % 100;
+      mnd = (laanedato / 100) % 100;
+      aar = laanedato / 10000;
+      dato1 = sjekkDato(dag, mnd, aar);
+      }
+
+      while (dato2 == false) {
+      cout << "Returfrist (AAAAMMDD): ";
+      cin >> returfrist;
+      cin.ignore();
+      dag1 = returfrist % 100;
+      mnd1 = (returfrist / 100) % 100;
+      aar1 = returfrist / 10000;
+      dato2 = sjekkDato(dag1, mnd1, aar1);
+      if (dato2 == false) {
+        cout << "Ugyldig dato." << '\n';
+      }
+      }
+        // Sjekker om returfristen er før lånedatoen.
+        if (aar > aar1) {
+            cout << "Ugyldig dato." << '\n';
+        }
+        else if (aar == aar1) {
+            if (mnd > mnd1) {
+                cout << "Ugyldig dato." << '\n';
+            }
+            else if (mnd == mnd1) {
+                if (dag > dag1) {
+                    cout << "Ugyldig dato." << '\n';
+                }
+            }
+        }
+        
+        // Hvis returfristen er etter lånedatoen.
+        else {
+            LaaneInfo* nyLaan = new LaaneInfo(navn);
+            nyLaan->settData(laanedato, returfrist);
+            utleideEksemplarer.push_back(nyLaan);
+            
+
+        }
+
     
     }
 
@@ -298,11 +354,10 @@ void UtlaansGjenstand::skrivTittelOgAntall() const {
 //*************************  FILM:  *********************************
 
 void Film::lesData() {
+  UtlaansGjenstand::lesData();
   timer = lesInt("Timer: ", 0, 3);
   minutter = lesInt("Minutter: ", 0, 59);
   aldersGrense = lesInt("Aldersgrense: ", 0, 18);
-
-//  LAG INNMATEN
 
 }
 
@@ -329,14 +384,18 @@ void Film::skrivUtleid() const {
 
 
 //*************************  BOK:  *********************************
-
+/**
+ * Leser inn all data (ikke tittel) som trengs for å opprette en ny bok.
+ * 
+ * @see UtlaansGjenstand::lesData()
+ */
 void Bok::lesData() {
 
   int bokFor;
+  UtlaansGjenstand::lesData();
   cout << "(1) Heftet, (2) Innbundet, (3) Pocket: ";
   bokFor = lesInt("Bokformat: ", 1, 3);
   bokFormat = Format(bokFor-1);
-  
 
   antallSider = lesInt("Antall sider: ", 1, 1000);
 
@@ -415,17 +474,20 @@ void nyGjenstand() {
   }
   else {
     int valg;
-    cout << "(1) Bok, (2) Film: ";
-    valg = lesInt("Valg: ", 1, 2);
+    cout << "(1) Bok, (2) Film, (3) Avbryt: ";
+    valg = lesInt("Valg: ", 1, 3);
     if (valg == 1) {
-      Bok* nyBok = new Bok;
+      Bok* nyBok = new Bok(title);
       nyBok->lesData();
       gBokene.push_back(nyBok);
     }
-    else {
-      Film* nyFilm = new Film;
+    if (valg == 2) {
+      Film* nyFilm = new Film(title);
       nyFilm->lesData();
       gFilmene.push_back(nyFilm);
+    }
+    else {
+      cout << "Ingen ny gjenstand lagt til." << '\n';
     }
   }
 
