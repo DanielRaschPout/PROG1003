@@ -1,13 +1,18 @@
 /**
  * 
  *  Programmet:
- *  
+ * -  Leser inn filmer/bøker fra bruker og legger dem i et vektor.
+ * -  Lar bruker låne ut filmer/bøker.
+ * -  Lar bruker levere inn filmer/bøker.
+ * -  Lar bruker endre antall eksemplarer av filmer/bøker.
+ * -  Skriver ut alle filmer/bøker i vektoren.
+ * -  Skriver ut alle utleide filmer/bøker i vektoren.
  * 
  * @file Oblig2.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
  * @brief 
  * @version 0.1
- * @date 16-02-2023
+ * @date 21-02-2023
  * 
  */
 #include <iostream>                //  cout, cin
@@ -123,7 +128,9 @@ void skrivUtleide();
 vector <Film*> gFilmene;    ///<  Vector med ALLE filmene i kartoteket.
 vector <Bok*> gBokene;      ///<  Vector med ALLE bøkene  i kartoteket.
 
-
+/**
+ * Hpvedprogrammet.
+ */
 int main()  {
 
   char valg;
@@ -155,7 +162,7 @@ int main()  {
  * 
  */
 void LaaneInfo::skrivData()  const  {
-    cout << "Navn: " << laanersNavn << '\n';
+    cout << "\nNavn: " << laanersNavn << '\n';
     cout << "Lånedato: " << laaneDato << '\n';
     cout << "Returfrist: " << returFrist << '\n';
 
@@ -181,11 +188,10 @@ UtlaansGjenstand::~UtlaansGjenstand() {
  * 
  */
 void UtlaansGjenstand::endreAntallEks() {
-    cout << "Tittel: " << tittel << '\n';
     cout << "Antall eksemplarer: " << antallEksemplarer << '\n';
     cout << "Vil du endre antall eksemplarer? (J/N)" << '\n';
-    char svar = lesChar("Svar: ");
-    toupper(svar);
+    char svar = lesChar("Svar");
+
     if (svar == 'J') {
     antallEksemplarer = lesInt("Antall eksemplarer: ",1,MAKSANTALL);
     }
@@ -195,7 +201,12 @@ void UtlaansGjenstand::endreAntallEks() {
 
 }
 
-
+/**
+ * Låner ut en gjenstand (hvis den er tilgjengelig)
+ * 
+ * @see erTilgjengelig()
+ * @see sjekkDato()
+ */
 void UtlaansGjenstand::laanUt(){
     if (erTilgjengelig()) {
       string navn;
@@ -336,23 +347,35 @@ if (aar < 2022 || aar > 2030) {
   return ans;
 }
 
-
+/**
+ * Skriver ut tittel, sjanger og antall eksemplarer.
+ * 
+ */
 void UtlaansGjenstand::skrivData() const {
 
-//  LAG INNMATEN
+  cout << "Tittel: " << tittel << '\n';
+  cout << "Sjanger: " << sjanger << '\n';
+  cout << "Antall eksemplarer: " << antallEksemplarer << '\n';
 
 }
 
 
 void UtlaansGjenstand::skrivTittelOgAntall() const {
 
-//  LAG INNMATEN
+  cout << "Tittel: " << tittel << '\n';
+  cout << "Antall eksemplarer: " << antallEksemplarer << '\n';
 
 }
 
 
 //*************************  FILM:  *********************************
-
+/**
+ * Leser og setter timer, minutter og aldersgrense.
+ * Tilkaller på lesData() fra superklassen for å lese inn 
+ * tittel, sjanger og antall eksemplarer.
+ * 
+ * @see UtlaansGjenstand::lesData()
+ */
 void Film::lesData() {
   UtlaansGjenstand::lesData();
   timer = lesInt("Timer: ", 0, 3);
@@ -361,24 +384,58 @@ void Film::lesData() {
 
 }
 
-
+/**
+ * Sjekker om låner er gammel nok til å se filmen.
+ * I så fall, kaller på laanUt().
+ * 
+ * @see UtlaansGjenstand::laanUt()
+ */
 void Film::sjekkAlderOgEvtLaanUt()  {
 
-//  LAG INNMATEN
+  int alder;
+  alder = lesInt("Alder: ", 0, 100);
+  if (alder < aldersGrense) {
+    cout << "Du er for ung til å se denne filmen." << '\n';
+  }
+  else {
+    UtlaansGjenstand::laanUt();
+  }
 
 }
 
-
+/**
+ * Skriver ut tittel, sjanger, antall eksemplarer, lengde og aldersgrense.
+ * 
+ * @see UtlaansGjenstand::skrivData()
+ */
 void Film::skrivData() const {
 
-//  LAG INNMATEN
+  UtlaansGjenstand::skrivData();
+  cout << "Lengde: " << timer << " timer og " << minutter 
+       << " minutter" << '\n';
+  cout << "Aldersgrense: " << aldersGrense << '\n';
 
 }
 
-
+/**
+ * Om det er utleide eksemplarer, skrives det ut 
+ * alle filmens data og info om alle lånerne.
+ * Hvis ingen er utleid, skrives det ut at ingen er utleid.
+ * 
+ * @see UtlaansGjenstand::skrivData()
+ */
 void Film::skrivUtleid() const {
 
-//  LAG INNMATEN
+  if (utleideEksemplarer.size() > 0) {
+    skrivData();
+    for (int i = 0; i < utleideEksemplarer.size(); i++) {
+      utleideEksemplarer[i]->skrivData();
+      
+    }
+  }
+  else {
+    cout << "Ingen eksemplarer er utleid." << '\n';
+  }
 
 }
 
@@ -402,26 +459,65 @@ void Bok::lesData() {
 
 }
 
-
+/**
+ * Skriver ut tittel, sjanger, antall eksemplarer, bokformat og antall sider.
+ * 
+ * @see UtlaansGjenstand::skrivData()
+ */
 void Bok::skrivData() const {
 
-//  LAG INNMATEN
+  UtlaansGjenstand::skrivData();
+  cout << "Bokformat: " << bokFormat << '\n';
+  cout << "Antall sider: " << antallSider << '\n';
 
 }
 
-
+/**
+ * Om det er utleide eksemplarer, skrives det ut
+ * alle bokens data og info om alle lånerne.
+ * Hvis ingen er utleid, skrives det ut at ingen er utleid.
+ * 
+ * @see UtlaansGjenstand::skrivData()
+ */
 void Bok::skrivUtleid() const {
 
-//  LAG INNMATEN
+  if (utleideEksemplarer.size() > 0) {
+    skrivData();
+    for (int i = 0; i < utleideEksemplarer.size(); i++) {
+      utleideEksemplarer[i]->skrivData();
+      
+    }
+  }
+  else {
+    cout << "Ingen eksemplarer er utleid." << '\n';
+  }
 
 }
 
 
 //*********************  FUNKSJONER:  *******************************
-
+/**
+ * Leser inn tittel for en gjenstand.
+ * Hvis gjenstanden finnes, kaller på UtlaansGjenstand::endreAntEks(),
+ * som endrer antall eksemplarer.
+ * Hvis ikke, skrives det ut at gjenstanden ikke finnes.
+ * 
+ * @see UtlaansGjenstand::endreAntallEks()
+ */
 void endreAntEksemplarer() {
 
-//  LAG INNMATEN
+  string title;
+  cout << "Tittel: ";
+  getline(cin, title);
+   if (finnEnGjenstand(title) != nullptr) {
+    UtlaansGjenstand* gjenstand = finnEnGjenstand(title);
+    gjenstand->endreAntallEks();
+
+
+  }
+  else {
+    cout << "Fant ingen gjenstand med denne tittelen." << '\n';
+  }
 }
 
 
@@ -451,20 +547,63 @@ UtlaansGjenstand* finnEnGjenstand(string tittel){
    return ((funn == 1) ? gjenstand : nullptr);
 }
 
-
+/**
+ * Frigir ALL allokert memory under run-time.
+ * 
+ */
 void fjernAllokertData() {
 
-//  LAG INNMATEN
-
+  // Går gjennom alle filmene og sletter dem
+  for (int i = 0; i < gFilmene.size(); i++) {
+    delete gFilmene[i];
+  }
+  // Går gjennom alle bøkene og sletter dem
+  for (int i = 0; i < gBokene.size(); i++) {
+    delete gBokene[i];
+  }
 }
 
-
+/**
+ * Leser inn tittel.
+ * Hvis gjenstanden finnes, kaller på UtlaansGjenstand::laanUt(),
+ * som låner ut gjenstanden.
+ * Hvis ikke, skrives det ut at gjenstanden ikke finnes.
+ * 
+ */
 void laanUtGjenstand(){
 
-//  LAG INNMATEN
+  string title;
+  cout << "Tittel: ";
+  getline(cin, title);
+  if (finnEnGjenstand(title) != nullptr) {
+    UtlaansGjenstand* gjenstand = finnEnGjenstand(title);
+    // Hvis gjenstand er bok
+    for (int i = 0; i < gBokene.size(); i++) {
+      if (gBokene[i] == gjenstand) {
+        gBokene[i]->laanUt();
+      }
+    }
+    // Hvis gjenstand er film
+    for (int i = 0; i < gFilmene.size(); i++) {
+      if (gFilmene[i] == gjenstand) {
+        gFilmene[i]->sjekkAlderOgEvtLaanUt();
+      }
+    }
+  }
+  else {
+    cout << "Fant ingen gjenstand med denne tittelen." << '\n';
+  }
 }
 
-
+/**
+ * Leser inn tittel.
+ * Hvis ikke finnes fra før, spør om det er en bok eller film.
+ * Aktuell gjenstand opprettes og leses inn.
+ * Hvis gjenstanden finnes fra før, skrives det ut at den finnes.
+ * 
+ * @see Bok::lesData()
+ * @see Film::lesData()
+ */
 void nyGjenstand() {
   string title;
   cout << "Tittel: ";
@@ -493,17 +632,57 @@ void nyGjenstand() {
 
 }
 
-
+/**
+ * Leser inn tittel.
+ * Hvis gjenstanden finnes, kaller på UtlaansGjenstand::leverInn(),
+ * som leverer inn gjenstanden.
+ * 
+ * @see UtlaansGjenstand::leverInn()
+ */
 void innleverGjenstand(){
 
-//  LAG INNMATEN
+  string title;
+  cout << "Tittel: ";
+  getline(cin, title);
+  if (finnEnGjenstand(title) != nullptr) {
+    UtlaansGjenstand* gjenstand = finnEnGjenstand(title);
+    gjenstand->leverInn();
+  }
+  else {
+    cout << "Fant ingen gjenstand med denne tittelen." << '\n';
+  }
 
 }
 
-
+/**
+ * Skriver ut alle bøker og filmer (hvis det er noen).
+ * 
+ * @see Bok::skrivData()
+ * @see Film::skrivData()
+ */
 void skrivAlle() {
 
-//  LAG INNMATEN
+  // Hvis det er noen bøker registrert, skriv ut alle bøkene
+  if (gBokene.size() > 0) {
+    cout << "\nBøker:\n";
+    for (int i = 0; i < gBokene.size(); i++) {
+      gBokene[i]->skrivData();
+    }
+  }
+  else {
+    cout << "Ingen bøker registrert." << '\n';
+  }
+  // Hvis det er noen filmer registrert, skriv ut alle filmer
+  if (gFilmene.size() > 0) {
+    cout << "\nFilmer:\n";
+    for (int i = 0; i < gFilmene.size(); i++) {
+      gFilmene[i]->skrivData();
+    }
+  }
+  else {
+    cout << "Ingen filmer registrert." << '\n';
+  }
+
 
 }
 
@@ -522,9 +701,31 @@ void skrivMeny()  {
        << "\n   Q  - Quit / avslutt";
 }
 
-
+/**
+ * @brief Skriver ut alle utleide bøker/filmer (hvis det er noen).
+ * 
+ */
 void skrivUtleide(){
 
-//  LAG INNMATEN
-
+  // Hvis det er noen bøker registrert, skriv ut alle utleide bøker
+  if (gBokene.size() > 0) {
+    cout << "\nUtleide bøker:\n";
+    for (int i = 0; i < gBokene.size(); i++) {
+      gBokene[i]->skrivUtleid();
+      
+    }
+  }
+  else {
+    cout << "Ingen bøker registrert." << '\n';
+  }
+  // Hvis det er noen filmer registrert, skriv ut alle utleide filmer
+  if (gFilmene.size() > 0) {
+    cout << "\nUtleide filmer:\n";
+    for (int i = 0; i < gFilmene.size(); i++) {
+      gFilmene[i]->skrivUtleid();
+    }
+  }
+  else {
+    cout << "Ingen filmer registrert." << '\n';
+  }
 }
