@@ -212,8 +212,7 @@ void UtlaansGjenstand::laanUt(){
       string navn;
       int laanedato,
           returfrist,
-          dag, mnd, aar,
-          dag1, mnd1, aar1;
+          dag, mnd, aar;
       bool dato1 = false,
            dato2 = false;
 
@@ -236,10 +235,10 @@ void UtlaansGjenstand::laanUt(){
       cout << "Returfrist (AAAAMMDD): ";
       cin >> returfrist;
       cin.ignore();
-      dag1 = returfrist % 100;
-      mnd1 = (returfrist / 100) % 100;
-      aar1 = returfrist / 10000;
-      dato2 = sjekkDato(dag1, mnd1, aar1);
+      dag = returfrist % 100;
+      mnd = (returfrist / 100) % 100;
+      aar = returfrist / 10000;
+      dato2 = sjekkDato(dag, mnd, aar);
       if (dato2 == false) {
         cout << "Ugyldig dato." << '\n';
       }
