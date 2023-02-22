@@ -129,7 +129,7 @@ vector <Film*> gFilmene;    ///<  Vector med ALLE filmene i kartoteket.
 vector <Bok*> gBokene;      ///<  Vector med ALLE bøkene  i kartoteket.
 
 /**
- * Hpvedprogrammet.
+ * Hovedprogrammet.
  */
 int main()  {
 
@@ -264,18 +264,13 @@ void UtlaansGjenstand::laanUt(){
             LaaneInfo* nyLaan = new LaaneInfo(navn);
             nyLaan->settData(laanedato, returfrist);
             utleideEksemplarer.push_back(nyLaan);
-            
-
         }
-
-    
     }
 
     // Melding hvis det ikke er noen eksemplarer tilgjengelig.
     else {
         cout << "Ingen eksemplarer tilgjengelig." << '\n';
     }
-
 }
 
 /**
