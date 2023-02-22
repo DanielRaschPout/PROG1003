@@ -11,8 +11,8 @@
  * @file Oblig2.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
  * @brief 
- * @version 0.1
- * @date 21-02-2023
+ * @version 0.2
+ * @date 22-02-2023
  * 
  */
 #include <iostream>                //  cout, cin
@@ -220,6 +220,7 @@ void UtlaansGjenstand::laanUt(){
       cout << "Lånerens navn: ";
       getline(cin, navn);
 
+      // Sjekker om Lånedato er gyldig.
       while (dato1 == false) {
       cout << "Lånedato (AAAAMMDD): ";
       cin >> laanedato;
@@ -230,6 +231,7 @@ void UtlaansGjenstand::laanUt(){
       dato1 = sjekkDato(dag, mnd, aar);
       }
 
+      // Sjekker om returfristen er gyldig.
       while (dato2 == false) {
       cout << "Returfrist (AAAAMMDD): ";
       cin >> returfrist;
@@ -354,8 +356,14 @@ if (aar < 2022 || aar > 2030) {
 void UtlaansGjenstand::skrivData() const {
 
   cout << "Tittel: " << tittel << '\n';
-  cout << "Sjanger: " << sjanger << '\n';
-  cout << "Antall eksemplarer: " << antallEksemplarer << '\n';
+  cout << "Sjanger: ";
+  switch (sjanger) {
+    case 0: cout << "Barn";     break;
+    case 1: cout << "Drama";    break;
+    case 2: cout << "Fantasy";  break;
+    case 3: cout << "Spenning"; break;
+  }
+  cout << "\nAntall eksemplarer: " << antallEksemplarer << '\n';
 
 }
 
@@ -467,8 +475,13 @@ void Bok::lesData() {
 void Bok::skrivData() const {
 
   UtlaansGjenstand::skrivData();
-  cout << "Bokformat: " << bokFormat << '\n';
-  cout << "Antall sider: " << antallSider << '\n';
+  cout << "Bokformat: ";
+  switch (bokFormat) {
+    case 0: cout << "Heftet";     break;
+    case 1: cout << "Innbundet";  break;
+    case 2: cout << "Pocket";     break;
+  }
+  cout << " \nAntall sider: " << antallSider << '\n';
 
 }
 
