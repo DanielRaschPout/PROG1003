@@ -12,7 +12,7 @@
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
  * @brief 
  * @version 0.2
- * @date 22-02-2023
+ * @date 23-02-2023
  * 
  */
 #include <iostream>                //  cout, cin
@@ -245,20 +245,8 @@ void UtlaansGjenstand::laanUt(){
       }
       }
         // Sjekker om returfristen er før lånedatoen.
-        if (aar > aar1) {
+        if (laanedato > returfrist) 
             cout << "Ugyldig dato." << '\n';
-        }
-        else if (aar == aar1) {
-            if (mnd > mnd1) {
-                cout << "Ugyldig dato." << '\n';
-            }
-            else if (mnd == mnd1) {
-                if (dag > dag1) {
-                    cout << "Ugyldig dato." << '\n';
-                }
-            }
-        }
-        
         // Hvis returfristen er etter lånedatoen.
         else {
             LaaneInfo* nyLaan = new LaaneInfo(navn);
