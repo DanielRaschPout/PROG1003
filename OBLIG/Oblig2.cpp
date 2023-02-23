@@ -212,8 +212,7 @@ void UtlaansGjenstand::laanUt(){
       string navn;
       int laanedato,
           returfrist,
-          dag, mnd, aar,
-          dag1, mnd1, aar1;
+          dag, mnd, aar;
       bool dato1 = false,
            dato2 = false;
 
@@ -221,28 +220,29 @@ void UtlaansGjenstand::laanUt(){
       getline(cin, navn);
 
       // Sjekker om Lånedato er gyldig.
-      while (dato1 == false) {
-      cout << "Lånedato (AAAAMMDD): ";
-      cin >> laanedato;
-      cin.ignore();
-      dag = laanedato % 100;
-      mnd = (laanedato / 100) % 100;
-      aar = laanedato / 10000;
-      dato1 = sjekkDato(dag, mnd, aar);
+      while (!dato1) {
+        cout << "Lånedato (AAAAMMDD): ";
+        cin >> laanedato;
+        cin.ignore();
+        dag = laanedato % 100;
+        mnd = (laanedato / 100) % 100;
+        aar = laanedato / 10000;
+        dato1 = sjekkDato(dag, mnd, aar);
+        if (!dato1) 
+          cout << "Ugyldig dato." << '\n';
       }
 
       // Sjekker om returfristen er gyldig.
-      while (dato2 == false) {
-      cout << "Returfrist (AAAAMMDD): ";
-      cin >> returfrist;
-      cin.ignore();
-      dag1 = returfrist % 100;
-      mnd1 = (returfrist / 100) % 100;
-      aar1 = returfrist / 10000;
-      dato2 = sjekkDato(dag1, mnd1, aar1);
-      if (dato2 == false) {
-        cout << "Ugyldig dato." << '\n';
-      }
+      while (!dato2) {
+        cout << "Returfrist (AAAAMMDD): ";
+        cin >> returfrist;
+        cin.ignore();
+        dag = returfrist % 100;
+        mnd = (returfrist / 100) % 100;
+        aar = returfrist / 10000;
+        dato2 = sjekkDato(dag, mnd, aar);
+        if (!dato2) 
+          cout << "Ugyldig dato." << '\n';
       }
         // Sjekker om returfristen er før lånedatoen.
         if (laanedato > returfrist) 
