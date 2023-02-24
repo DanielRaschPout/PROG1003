@@ -10,7 +10,6 @@
  * 
  * @file Oblig2.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
- * @brief 
  * @version 0.3
  * @date 24-02-2023
  * 
@@ -599,7 +598,7 @@ void nyGjenstand() {
     int valg;
     cout << "(1) Bok, (2) Film, (3) Avbryt";
     valg = lesInt("", 1, 3);
-    
+
     switch (valg) {
       case 1: {
         Bok* nyBok = new Bok();
