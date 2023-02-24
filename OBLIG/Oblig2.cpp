@@ -201,8 +201,10 @@ void UtlaansGjenstand::endreAntallEks() {
 /**
  * Låner ut en gjenstand (hvis den er tilgjengelig)
  * 
- * @see erTilgjengelig()
- * @see sjekkDato()
+ * @see UtlaansGjenstand::erTilgjengelig()
+ * @see UtlaansGjenstand::sjekkDato()
+ * @see LaaneInfo::LaaneInfo()
+ * @see LaaneInfo::settData()
  */
 void UtlaansGjenstand::laanUt(){
     if (erTilgjengelig()) {
@@ -405,7 +407,7 @@ void Film::skrivData() const {
  * Hvis ingen er utleid, skrives det ut at ingen er utleid.
  * 
  * @see Film::skrivData()
- * @see UtlaansGjenstand::skrivData()
+ * @see LaaneInfo::skrivData()
  */
 void Film::skrivUtleid() const {
 
@@ -461,7 +463,7 @@ void Bok::skrivData() const {
  * Hvis ingen er utleid, skrives det ut at ingen er utleid.
  * 
  * @see Bok::skrivData()
- * @see UtlaansGjenstand::skrivData()
+ * @see LaaneInfo::skrivData()
  */
 void Bok::skrivUtleid() const {
 
@@ -493,10 +495,7 @@ void endreAntEksemplarer() {
   cout << "Tittel: ";
   getline(cin, title);
    if (finnEnGjenstand(title) != nullptr) {
-    UtlaansGjenstand* gjenstand = finnEnGjenstand(title);
-    gjenstand->endreAntallEks();
-
-
+    finnEnGjenstand(title)->endreAntallEks();
   }
   else {
     cout << "Fant ingen gjenstand med denne tittelen." << '\n';
@@ -552,6 +551,8 @@ void fjernAllokertData() {
  * som låner ut gjenstanden.
  * Hvis ikke, skrives det ut at gjenstanden ikke finnes.
  * 
+ * @see UtlaansGjenstand::laanUt()
+ * @see Film::sjekkAlderOgEvtLaanUt()
  */
 void laanUtGjenstand(){
 
@@ -598,18 +599,24 @@ void nyGjenstand() {
     int valg;
     cout << "(1) Bok, (2) Film, (3) Avbryt";
     valg = lesInt("", 1, 3);
-    if (valg == 1) {
-      Bok* nyBok = new Bok(title);
-      nyBok->lesData();
-      gBokene.push_back(nyBok);
-    }
-    if (valg == 2) {
-      Film* nyFilm = new Film(title);
-      nyFilm->lesData();
-      gFilmene.push_back(nyFilm);
-    }
-    else {
-      cout << "Ingen ny gjenstand lagt til." << '\n';
+    
+    switch (valg) {
+      case 1: {
+        Bok* nyBok = new Bok();
+        nyBok->lesData();
+        gBokene.push_back(nyBok);
+        break;
+      }
+      case 2: {
+        Film* nyFilm = new Film();
+        nyFilm->lesData();
+        gFilmene.push_back(nyFilm);
+        break;
+      }
+      case 3: {
+        cout << "Avbryter." << '\n';
+        break;
+      }
     }
   }
 }
@@ -681,8 +688,10 @@ void skrivMeny()  {
 }
 
 /**
- * @brief Skriver ut alle utleide bøker/filmer (hvis det er noen).
+ * Skriver ut alle utleide bøker/filmer (hvis det er noen).
  * 
+ * @see Bok::skrivUtleid()
+ * @see Film::skrivUtleid()
  */
 void skrivUtleide(){
 
