@@ -11,8 +11,8 @@
  * @file Oblig2.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
  * @brief 
- * @version 0.2
- * @date 23-02-2023
+ * @version 0.3
+ * @date 24-02-2023
  * 
  */
 #include <iostream>                //  cout, cin
@@ -165,7 +165,6 @@ void LaaneInfo::skrivData()  const  {
     cout << "\nNavn: " << laanersNavn << '\n';
     cout << "Lånedato: " << laaneDato << '\n';
     cout << "Returfrist: " << returFrist << '\n';
-
 }
 
 
@@ -180,7 +179,6 @@ UtlaansGjenstand::~UtlaansGjenstand() {
         delete utleideEksemplarer[i];
     }
     utleideEksemplarer.clear();
-
 }
 
 /**
@@ -193,12 +191,11 @@ void UtlaansGjenstand::endreAntallEks() {
     char svar = lesChar("Svar");
 
     if (svar == 'J') {
-    antallEksemplarer = lesInt("Antall eksemplarer: ",1,MAKSANTALL);
+    antallEksemplarer = lesInt("Antall eksemplarer",1,MAKSANTALL);
     }
     else {
         cout << "Antall eksemplarer er ikke endret." << '\n';
     }
-
 }
 
 /**
@@ -304,7 +301,6 @@ void UtlaansGjenstand::leverInn() {
     else {
         cout << "Ingen eksemplarer er utleid." << '\n';
     }
-
 }
 
 /**
@@ -341,13 +337,12 @@ void UtlaansGjenstand::skrivData() const {
   cout << "Tittel: " << tittel << '\n';
   cout << "Sjanger: ";
   switch (sjanger) {
-    case 0: cout << "Barn";     break;
-    case 1: cout << "Drama";    break;
-    case 2: cout << "Fantasy";  break;
-    case 3: cout << "Spenning"; break;
+    case Barn:     cout << "Barn";     break;
+    case Drama:    cout << "Drama";    break;
+    case Fantasy:  cout << "Fantasy";  break;
+    case Spenning: cout << "Spenning"; break;
   }
   cout << "\nAntall eksemplarer: " << antallEksemplarer << '\n';
-
 }
 
 
@@ -355,7 +350,6 @@ void UtlaansGjenstand::skrivTittelOgAntall() const {
 
   cout << "Tittel: " << tittel << '\n';
   cout << "Antall eksemplarer: " << antallEksemplarer << '\n';
-
 }
 
 
@@ -372,7 +366,6 @@ void Film::lesData() {
   timer = lesInt("Timer: ", 0, 3);
   minutter = lesInt("Minutter: ", 0, 59);
   aldersGrense = lesInt("Aldersgrense: ", 0, 18);
-
 }
 
 /**
@@ -391,7 +384,6 @@ void Film::sjekkAlderOgEvtLaanUt()  {
   else {
     UtlaansGjenstand::laanUt();
   }
-
 }
 
 /**
@@ -405,7 +397,6 @@ void Film::skrivData() const {
   cout << "Lengde: " << timer << " timer og " << minutter 
        << " minutter" << '\n';
   cout << "Aldersgrense: " << aldersGrense << '\n';
-
 }
 
 /**
@@ -413,6 +404,7 @@ void Film::skrivData() const {
  * alle filmens data og info om alle lånerne.
  * Hvis ingen er utleid, skrives det ut at ingen er utleid.
  * 
+ * @see Film::skrivData()
  * @see UtlaansGjenstand::skrivData()
  */
 void Film::skrivUtleid() const {
@@ -421,13 +413,11 @@ void Film::skrivUtleid() const {
     skrivData();
     for (int i = 0; i < utleideEksemplarer.size(); i++) {
       utleideEksemplarer[i]->skrivData();
-      
     }
   }
   else {
     cout << "Ingen eksemplarer er utleid." << '\n';
   }
-
 }
 
 
@@ -441,13 +431,11 @@ void Bok::lesData() {
 
   int bokFor;
   UtlaansGjenstand::lesData();
-  cout << "(1) Heftet, (2) Innbundet, (3) Pocket";
+  cout << "(1) Pocket, (2) Innbundet, (3) Lydbok:";
   bokFor = lesInt("", 1, 3);
   bokFormat = Format(bokFor-1);
 
   antallSider = lesInt("Antall sider", 1, 1000);
-
-
 }
 
 /**
@@ -460,12 +448,11 @@ void Bok::skrivData() const {
   UtlaansGjenstand::skrivData();
   cout << "Bokformat: ";
   switch (bokFormat) {
-    case 0: cout << "Heftet";     break;
-    case 1: cout << "Innbundet";  break;
-    case 2: cout << "Pocket";     break;
+    case Pocket:    cout << "Pocket";     break;
+    case Innbundet: cout << "Innbundet";  break;
+    case Lydbok:    cout << "Lydbok";     break;
   }
   cout << " \nAntall sider: " << antallSider << '\n';
-
 }
 
 /**
@@ -473,6 +460,7 @@ void Bok::skrivData() const {
  * alle bokens data og info om alle lånerne.
  * Hvis ingen er utleid, skrives det ut at ingen er utleid.
  * 
+ * @see Bok::skrivData()
  * @see UtlaansGjenstand::skrivData()
  */
 void Bok::skrivUtleid() const {
@@ -487,7 +475,6 @@ void Bok::skrivUtleid() const {
   else {
     cout << "Ingen eksemplarer er utleid." << '\n';
   }
-
 }
 
 
@@ -625,7 +612,6 @@ void nyGjenstand() {
       cout << "Ingen ny gjenstand lagt til." << '\n';
     }
   }
-
 }
 
 /**
@@ -647,7 +633,6 @@ void innleverGjenstand(){
   else {
     cout << "Fant ingen gjenstand med denne tittelen." << '\n';
   }
-
 }
 
 /**
@@ -678,8 +663,6 @@ void skrivAlle() {
   else {
     cout << "Ingen filmer registrert." << '\n';
   }
-
-
 }
 
 
