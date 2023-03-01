@@ -10,8 +10,8 @@
  * 
  * @file Oblig2.cpp
  * @author Daniel Fernando Petter Rasch-Pout (dfraschp@gmail.com)
- * @version 0.3
- * @date 24-02-2023
+ * @version 0.4
+ * @date 02-03-2023
  * 
  */
 #include <iostream>                //  cout, cin
@@ -191,6 +191,11 @@ void UtlaansGjenstand::endreAntallEks() {
 
     if (svar == 'J') {
     antallEksemplarer = lesInt("Antall eksemplarer",1,MAKSANTALL);
+    while (antallEksemplarer < utleideEksemplarer.size()) {
+        cout << "Det er utlånt flere eksemplarer enn det er i beholdning." << '\n';
+        cout << "Du må først innlevere eksemplarer." << '\n';
+        antallEksemplarer = lesInt("Antall eksemplarer",1,MAKSANTALL);
+    }
     }
     else {
         cout << "Antall eksemplarer er ikke endret." << '\n';
@@ -332,10 +337,11 @@ if (aar < 2022 || aar > 2030) {
 /**
  * Skriver ut tittel, sjanger og antall eksemplarer.
  * 
+ * @see UtlaansGjenstand::skrivTittelOgAntall()
  */
 void UtlaansGjenstand::skrivData() const {
 
-  cout << "Tittel: " << tittel << '\n';
+  skrivTittelOgAntall();
   cout << "Sjanger: ";
   switch (sjanger) {
     case Barn:     cout << "Barn";     break;
@@ -542,6 +548,8 @@ void fjernAllokertData() {
   for (int i = 0; i < gBokene.size(); i++) {
     delete gBokene[i];
   }
+  gBokene.clear();
+  gFilmene.clear();
 }
 
 /**
@@ -601,13 +609,13 @@ void nyGjenstand() {
 
     switch (valg) {
       case 1: {
-        Bok* nyBok = new Bok();
+        Bok* nyBok = new Bok(title);
         nyBok->lesData();
         gBokene.push_back(nyBok);
         break;
       }
       case 2: {
-        Film* nyFilm = new Film();
+        Film* nyFilm = new Film(title);
         nyFilm->lesData();
         gFilmene.push_back(nyFilm);
         break;
