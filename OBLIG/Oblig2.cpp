@@ -185,21 +185,21 @@ UtlaansGjenstand::~UtlaansGjenstand() {
  * 
  */
 void UtlaansGjenstand::endreAntallEks() {
-    cout << "Antall eksemplarer: " << antallEksemplarer << '\n';
-    cout << "Vil du endre antall eksemplarer? (J/N)" << '\n';
-    char svar = lesChar("Svar");
+  cout << "Antall eksemplarer: " << antallEksemplarer << '\n';
+  cout << "Vil du endre antall eksemplarer? (J/N)" << '\n';
+  char svar = lesChar("Svar");
 
-    if (svar == 'J') {
+  if (svar == 'J') {
+  antallEksemplarer = lesInt("Antall eksemplarer",1,MAKSANTALL);
+  while (antallEksemplarer < utleideEksemplarer.size()) {
+    cout << "Det er utlånt flere eksemplarer enn det er i beholdning." << '\n';
+    cout << "Du må først innlevere eksemplarer." << '\n';
     antallEksemplarer = lesInt("Antall eksemplarer",1,MAKSANTALL);
-    while (antallEksemplarer < utleideEksemplarer.size()) {
-        cout << "Det er utlånt flere eksemplarer enn det er i beholdning." << '\n';
-        cout << "Du må først innlevere eksemplarer." << '\n';
-        antallEksemplarer = lesInt("Antall eksemplarer",1,MAKSANTALL);
-    }
-    }
-    else {
-        cout << "Antall eksemplarer er ikke endret." << '\n';
-    }
+  }
+  }
+  else {
+    cout << "Antall eksemplarer er ikke endret." << '\n';
+  }
 }
 
 /**
