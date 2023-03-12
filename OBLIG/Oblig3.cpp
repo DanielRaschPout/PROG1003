@@ -141,33 +141,32 @@ int main() {
  * Skriver ut alle valgene brukeren kan gjøre, og hva de gjør.
 */
 void skrivMeny() {
-    cout << "(S) Skriv alle rommene" << endl;
-    cout << "(B) Book rom" << endl;
-    cout << "(F) Se data" << endl;
-    cout << "(U) Sjekk ut" << endl;
-    cout << "(Q) Avslutt" << endl;
+    cout << "(S) Skriv alle rommene" << '\n';
+    cout << "(B) Book rom" << '\n';
+    cout << "(F) Se data" << '\n';
+    cout << "(U) Sjekk ut" << '\n';
+    cout << "(Q) Avslutt" << '\n';
 }
 
-void lesFraFil() {
-    ifstream innfil("HOTELL.DTA");
-    if (!innfil)  {
-        cout << "Kan ikke åpne filen 'HOTELL.DTA' for lesing!" << endl;
-    }
-    else {
-        int antallRommene;
-        innfil >> antallRommene;
-        for (int i = 0; i < antallRommene; i++)  {
-            int romNr;
-            innfil >> romNr;
-            char romType;
-            innfil >> romType;
-            if (romType == 'E')  {
-                gHotellRommene[romNr] = new Enkeltrom(innfil);
+void lesFraFIl() {
+    char objektType;
+    ifstream innfil("HOTELL.DTA");     // Fil å lese INN fra.
+
+    if (innfil) {
+        cout << "\nLeser dataene fra 'HOTELL.DTA'\n";
+        innfil >> objektType;           //  Leser (om mulig) 1.felt ('E'/'D').
+        while (!innfil.eof()) {         //  Ennå ikke filslutt:
+            innfil.ignore();            //  Forkaster ' ' etter 'E'/'D'.
+            switch (objektType) {
+              case 'E': break;
+              case 'D': break;
+              default:  cout << "\n\tUlovlig type objekt på filen: '"
+                             << objektType << "'\n\n";                  break;
             }
-            else if (romType == 'D')  {
-                gHotellRommene[romNr] = new Dobbeltrom(innfil);
-            }
+            innfil >> objektType;       //  Leser (om mulig) 1.felt ('E'/'D').
         }
-        innfil.close();
     }
+    // Feilmelding om man ikke finner filen
+    else    cout << "Fant ikke filen 'HOTELL.DTA'\n";
+
 }
