@@ -148,8 +148,13 @@ void skrivMeny() {
     cout << "(Q) Avslutt" << '\n';
 }
 
+/**
+ * Leser inn data om rom (enkelt og dobbelt) fra fil og legger dem i et map.
+ * 
+ */
 void lesFraFIl() {
     char objektType;
+    int romNr = LAVESTEROMNR;
     ifstream innfil("HOTELL.DTA");     // Fil å lese INN fra.
 
     if (innfil) {
@@ -158,15 +163,55 @@ void lesFraFIl() {
         while (!innfil.eof()) {         //  Ennå ikke filslutt:
             innfil.ignore();            //  Forkaster ' ' etter 'E'/'D'.
             switch (objektType) {
-              case 'E': break;
-              case 'D': break;
+              case 'E': gHotellRommene[romNr] = new Enkeltrom(innfil); 
+              break;
+              case 'D': gHotellRommene[romNr] = new Dobbeltrom(innfil); 
+              break;
               default:  cout << "\n\tUlovlig type objekt på filen: '"
                              << objektType << "'\n\n";                  break;
             }
-            innfil >> objektType;       //  Leser (om mulig) 1.felt ('E'/'D').
+            innfil >> objektType;      //  Leser (om mulig) 1.felt ('E'/'D').
+            romNr++;
         }
     }
     // Feilmelding om man ikke finner filen
     else    cout << "Fant ikke filen 'HOTELL.DTA'\n";
+
+}
+
+/**
+ * @brief Leser inn data for baseklassen Hotellrom.
+ * 
+ * @param inn filen som blir lest fra
+ */
+Hotellrom::Hotellrom(ifstream & inn) {
+    inn >> antallDager;
+    inn.ignore();
+    getline(inn, navn);
+}
+
+/**
+ * Leser inn data for et enkelt fra fil.
+ * 
+ * @param inn filen som blir lest fra
+ * @see Hotellrom::Hotellrom(ifstream & inn)
+ */
+Enkeltrom::Enkeltrom(ifstream & inn) : Hotellrom(inn) {
+    inn >> frokost;     inn.ignore();
+    inn >> studentRabatt; inn.ignore();
+}
+
+/**
+ * Leser inn data for et dobbeltrom fra fil.
+ * 
+ * @param inn filen som blir lest fra
+ * @see Hotellrom::Hotellrom(ifstream & inn)
+ */
+Dobbeltrom::Dobbeltrom(ifstream & inn) : Hotellrom(inn) {
+    inn >> allInclusive; inn.ignore();
+    inn >> filmpakke;    inn.ignore();
+}
+
+void skrivTilFil() {
 
 }
