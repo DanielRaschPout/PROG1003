@@ -212,6 +212,56 @@ Dobbeltrom::Dobbeltrom(ifstream & inn) : Hotellrom(inn) {
     inn >> filmpakke;    inn.ignore();
 }
 
+/**
+ * Skriver alle rommene til fil.
+ * 
+ * @see Enkeltrom::skrivTilFil(ofstream & ut) const
+ * @see Dobbeltrom::skrivTilFil(ofstream & ut) const
+ */
+ */
 void skrivTilFil() {
+    ofstream utfil("HOTELL.DTA");     // Fil å skrive UT til.
 
+    if (utfil) {
+        cout << "\nSkriver dataene til 'HOTELL.DTA'\n";
+        for (int i = 0; gHotellRommene.size(); i++) {
+            gHotellRommene[i]->skrivTilFil(utfil);
+        }
+    }
+    // Feilmelding om man ikke finner filen
+    else    cout << "Fant ikke filen 'HOTELL.DTA'\n";
+}
+
+/**
+ * Skriver baseklassen Hotellrom sine dataer til fil.
+ * 
+ */
+void Hotellrom::skrivTilFil(ofstream & ut) const {
+    ut << antallDager << ' ' << navn << '\n';
+}
+
+/**
+ * Skriver ut ETT enkeltrom til fil.
+ * 
+ * @see Hotellrom::skrivTilFil(ofstream & ut) const
+ */
+void Enkeltrom::skrivTilFil(ofstream & ut) const {
+    ut << "E ";
+    Hotellrom::skrivTilFil(ut);
+     ut << frokost << ' ' << studentRabatt << '\n';
+}
+
+/**
+ * Skriver ut ETT dobbeltrom til fil.
+ * 
+ * @see Hotellrom::skrivTilFil(ofstream & ut) const
+ */
+void Dobbeltrom::skrivTilFil(ofstream & ut) const {
+    ut << "D ";
+    Hotellrom::skrivTilFil(ut);
+    ut << allInclusive << ' ' << filmpakke << '\n';
+}
+
+void skrivBookedeRomnumre() {
+    
 }
