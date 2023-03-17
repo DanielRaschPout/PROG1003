@@ -213,11 +213,10 @@ Dobbeltrom::Dobbeltrom(ifstream & inn) : Hotellrom(inn) {
 }
 
 /**
- * Skriver alle rommene til fil.
+ * Skriver alle rommene til fil. 
  * 
  * @see Enkeltrom::skrivTilFil(ofstream & ut) const
  * @see Dobbeltrom::skrivTilFil(ofstream & ut) const
- */
  */
 void skrivTilFil() {
     ofstream utfil("HOTELL.DTA");     // Fil å skrive UT til.
