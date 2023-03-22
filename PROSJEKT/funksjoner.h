@@ -1,0 +1,6 @@
+#ifndef PROSJEKT_FUNKSJONER_H
+#define PROSJEKT_FUNKSJONER_H
+
+void skrivMeny();
+
+#endif //PROSJEKT_FUNKSJONER_H

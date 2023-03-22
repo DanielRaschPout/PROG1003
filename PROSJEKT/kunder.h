@@ -1,0 +1,4 @@
+#ifndef PROSJEKT_KUNDER_H
+#define PROSJEKT_KUNDER_H
+
+#endif //PROSJEKT_KUNDER_H
